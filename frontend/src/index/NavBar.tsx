@@ -50,6 +50,27 @@ export default function NavBar() {
 		setNavHistory([...navHistory, newPath]);
 	};
 
+	const partClick = (part: string) => {
+		if (part === "C:\\") {
+			setPath({ current: ["C:\\"] });
+			setCurrentPathIndex(0);
+			setNavHistory([]);
+		} else if (part === "..") {
+			if (path.current.length === 1) return;
+			const newPath = path.current.slice(0, -1);
+			setPath({ current: newPath });
+			setCurrentPathIndex(currentPathIndex + 1);
+			setNavHistory([...navHistory, newPath]);
+		} else {
+			while (path.current.length > 1 && path.current[path.current.length - 1] !== part) {
+				path.current.pop();
+			}
+			setPath({ current: path.current });
+			setCurrentPathIndex(currentPathIndex + 1);
+			setNavHistory([...navHistory, path.current]);
+		}
+	};
+
 	return (
 		<div className="bg-primary-panel border-border flex h-14 w-full flex-row items-center justify-between border-b px-2 py-2 drop-shadow-sm">
 			<div>
@@ -88,6 +109,9 @@ export default function NavBar() {
 						<div
 							key={part}
 							className="hover:bg-primary-panel-hover my-1 mr-1 flex cursor-pointer flex-row items-center rounded text-gray-300 drop-shadow"
+							onClick={() => {
+								partClick(part);
+							}}
 						>
 							<div className="mx-1 select-none">{part.replaceAll("\\", "")}</div>
 							{part === path.current[path.current.length - 1] ? "" : <FaChevronRight className="text-sm" />}

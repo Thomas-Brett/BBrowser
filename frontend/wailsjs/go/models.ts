@@ -6,6 +6,7 @@ export namespace main {
 	    Size: number;
 	    // Go type: time
 	    DateModify: any;
+	    Encrypted: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new File(source);
@@ -17,6 +18,7 @@ export namespace main {
 	        this.IsDir = source["IsDir"];
 	        this.Size = source["Size"];
 	        this.DateModify = this.convertValues(source["DateModify"], null);
+	        this.Encrypted = source["Encrypted"];
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

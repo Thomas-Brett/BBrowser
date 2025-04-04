@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -33,6 +34,7 @@ type File struct {
 	IsDir      bool
 	Size       int64
 	DateModify time.Time
+	Encrypted  bool
 }
 
 func (a *App) GetFiles(path string) []File {
@@ -47,11 +49,20 @@ func (a *App) GetFiles(path string) []File {
 		if err != nil {
 			return nil
 		}
+
+		encrypted := false
+		if strings.HasPrefix(file.Name(), "$e") {
+			encrypted = true
+			name := file.Name()[2:]
+
+		}
+
 		filesList = append(filesList, File{
 			Name:       file.Name(),
 			IsDir:      file.IsDir(),
 			Size:       info.Size(),
 			DateModify: info.ModTime(),
+			Encrypted:  encrypted,
 		})
 	}
 	return filesList

@@ -8,8 +8,8 @@ function App() {
 		<div id="App">
 			<HashRouter>
 				<Routes>
-					<Route path="/login" element={<Login />} />
 					<Route path="/" element={<Index />} />
+					<Route path="/login" element={<Login />} />
 				</Routes>
 			</HashRouter>
 		</div>
